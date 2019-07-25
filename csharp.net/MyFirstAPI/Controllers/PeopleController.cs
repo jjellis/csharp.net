@@ -73,8 +73,11 @@ namespace MyFirstAPI.Controllers
 
         // DELETE api/people/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var person = _people.FirstOrDefault(p => p.Id == id);
+            _people.Remove(person);
+            return Ok(_people);
         }
     }
 }
