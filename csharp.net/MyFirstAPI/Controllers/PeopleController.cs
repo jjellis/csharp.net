@@ -54,13 +54,23 @@ namespace MyFirstAPI.Controllers
         }
    
 
-        // PUT api/values/5
+        // PUT api/people/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] string value)
         {
+            var person = _people.FirstOrDefault(p => p.Id == id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                person.Name = value;
+                return Ok(person);
+            }
         }
 
-        // DELETE api/values/5
+        // DELETE api/people/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
