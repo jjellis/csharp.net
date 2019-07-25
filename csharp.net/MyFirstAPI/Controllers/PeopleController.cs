@@ -56,7 +56,7 @@ namespace MyFirstAPI.Controllers
 
         // PUT api/people/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Person newPerson)
         {
             var person = _people.FirstOrDefault(p => p.Id == id);
             if (person == null)
@@ -65,7 +65,8 @@ namespace MyFirstAPI.Controllers
             }
             else
             {
-                person.Name = value;
+                person.Name = newPerson.Name;
+                person.HairColor = newPerson.HairColor;
                 return Ok(person);
             }
         }
