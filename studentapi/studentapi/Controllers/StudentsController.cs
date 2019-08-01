@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using studentapi.Services;
+using studentapi.Models;
 
 namespace studentapi.Controllers
 {
@@ -10,36 +12,71 @@ namespace studentapi.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        // GET api/values
+        private readonly IStudentSeervices _studentService;
+        public StudentsController(IStudentSeervices studentServices)
+        {
+            _studentService = studentServices;
+        }
+
+        // GET api/students
         [HttpGet]
         public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_studentService.GetAll());
         }
 
-        // GET api/values/5
+        // GET api/student/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var student = _studentService.Get(id);
+            if (student == null)
+                return NotFound();
+            return Ok(student);
         }
 
-        // POST api/values
+        // POST api/student
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Student newStudent)
         {
+            Student student;
+            try
+            {
+             student = _studentService.Add(newStudent);
+
+            }
+            catch(ApplicationException ex)
+            {
+                ModelState.AddModelError("AddStudent", ex.Message);
+                return BadRequest(ModelState);
+            }
+            
+            if (student == null)
+                return BadRequest();
+            return CreatedAtAction("Get", new { Id = newStudent.Id }, newStudent);
+
         }
 
-        // PUT api/values/5
+        // PUT api/student/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Student updatedStudent)
         {
+            var student = _studentService.Update(updatedStudent);
+            if (student == null)
+                return NotFound();
+            return Ok(student);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var student = _studentService.Get(id);
+            if (student == null)
+                return NotFound();
+            _studentService.Remove(student);
+            return NoContent();
+          
         }
     }
 }

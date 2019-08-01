@@ -30,6 +30,8 @@ namespace studentapi.Services
                 Phone = "555.555.5555"
             }
         };
+        private int _nextId = 3;
+
         public IEnumerable<Student> GetAll()
         {
             return _students;
@@ -41,9 +43,26 @@ namespace studentapi.Services
         }
         public Student Add(Student newStudent)
         {
+
+            ValidateStudentBirthDate(newStudent);
+            newStudent.Id = _nextId++;
             _students.Add(newStudent);
             return newStudent;
         }
+
+        private void ValidateStudentBirthDate(Student newStudent)
+        {
+            if (newStudent.BirthDate.Year >= DateTime.Now.Year)
+            {
+                throw new ApplicationException("birthdate cannot be in the future");
+            }
+            if (DateTime.Now.Year - newStudent.BirthDate.Year > 19)
+            {
+                throw new ApplicationException("you are to old to be a student");
+            }
+           
+        }
+
         public Student Update(Student updatedStudent)
         {
             //find student by id
