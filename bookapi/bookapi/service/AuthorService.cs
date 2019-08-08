@@ -41,7 +41,7 @@ namespace bookapi.service
 
         public Author Get(int id)
         {
-            //return _authorContext.author.FisrtOrDefault(b => b.id==id);
+            //return _bookContext.authors.FisrtOrDefault(b => b.id==id);
             return _bookContext.authors
             .Include(a => a.Books)
             .SingleOrDefault(a => a.Id == id);

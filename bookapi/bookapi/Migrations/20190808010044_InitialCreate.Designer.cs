@@ -9,7 +9,7 @@ using bookapi.data;
 namespace bookapi.Migrations
 {
     [DbContext(typeof(BookContext))]
-    [Migration("20190808004807_InitialCreate")]
+    [Migration("20190808010044_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
