@@ -14,7 +14,7 @@ namespace bookapi.models
         [MaxLength(250, ErrorMessage ="The title is to long max length is 250 characters")]
         public string Title { get; set; }
         [Required]
-        public string AuthorId { get; set; }
+        public int AuthorId { get; set; }
         [Required]
         public string Category { get; set; }
         public Author Author { get; set; }
