@@ -59,5 +59,14 @@ namespace bookapi.ApiModels
         {
             return authorModels.Select(a => a.ToDomainModel());
         }
+        public static IEnumerable<BookModels> ToApiModel(this IEnumerable<Book> publisher)
+        {
+            return publisher.Select(a => a.ToApiModel());
+        }
+
+        public static IEnumerable<Book> ToDomainModels(this IEnumerable<BookModels> publisherModels)
+        {
+            return publisherModels.Select(a => a.ToDomainModel());
+        }
     }
 }

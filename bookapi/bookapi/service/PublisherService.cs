@@ -6,7 +6,6 @@ using bookapi.Controllers;
 using bookapi.data;
 using bookapi.models;
 using Microsoft.EntityFrameworkCore;
-using bookapi.service;
 
 namespace bookapi.service
 {

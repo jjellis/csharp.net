@@ -64,9 +64,9 @@ namespace bookapi.Controllers
 
         // PUT api/books/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]  Book Updatedbook)
+        public IActionResult Put(int id, [FromBody]  Book updatedbook)
         {
-            var book = _bookService.Update(Updatedbook.ToDomainModel());
+            var book = _bookService.Update(updatedbook.ToDomainModel());
             if (book == null) return NotFound();
             return Ok(book);
         }
