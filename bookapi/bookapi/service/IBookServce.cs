@@ -14,5 +14,6 @@ namespace bookapi.service
         Book Update(Book UpdatedBook);
         void Delete(Book book);
         IEnumerable<Book> GetBooksForAuthor(int id);
+        IEnumerable<Book> GetBooksForPublisher(int id);
     }
 }

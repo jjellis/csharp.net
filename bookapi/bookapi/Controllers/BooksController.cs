@@ -89,5 +89,14 @@ namespace bookapi.Controllers
 
             return Ok(bookModels);
         }
+
+        public IActionResult GetBooksForPublisher(int publisherId)
+        {
+            var bookModels = _bookService
+                .GetBooksForAuthor(publisherId)
+                .ToApiModels();
+
+            return Ok(bookModels);
+        }
     }
 }

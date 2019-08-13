@@ -64,5 +64,14 @@ namespace bookapi.service
                 .Where(b => b.AuthorId == authorId)
                 .ToList();
         }
+
+        public IEnumerable<Book> GetBooksForPublisher(int publisherId)
+        {
+            return _bookContext.books
+                .Include(b => b.Publisher)
+                .Include(b => b.Author)
+                .Where(b => b.AuthorId == publisherId)
+                .ToList();
+        }
     }
 }
