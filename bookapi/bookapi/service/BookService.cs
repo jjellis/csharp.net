@@ -19,6 +19,7 @@ namespace bookapi.service
         public IEnumerable<Book> GetAll()
         {
             return _bookContext.books.ToList();
+
         }
 
         public Book Add(Book newBook)
@@ -38,8 +39,9 @@ namespace bookapi.service
 
         public Book Get(int id)
         {
+            
             //return _bookContext.books.FisrtOrDefault(b => b.id==id);
-            return _bookContext.books.Find(id);
+             return _bookContext.books.Find(id);
         }
 
        
@@ -52,6 +54,15 @@ namespace bookapi.service
             _bookContext.Update(CurrentBook);
             _bookContext.SaveChanges();
             return CurrentBook;
+        }
+
+        public IEnumerable<Book> GetBooksForAuthor(int authorId)
+        {
+            return _bookContext.books
+                .Include(b => b.Publisher)
+                .Include(b => b.Author)
+                .Where(b => b.AuthorId == authorId)
+                .ToList();
         }
     }
 }

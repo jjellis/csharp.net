@@ -38,6 +38,7 @@ namespace bookapi
             
             services.AddScoped<IBookServce, BookService>();
             services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IPublisherService, PublishService>();
 
 
         }

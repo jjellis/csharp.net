@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using bookapi.ApiModels;
 
 namespace bookapi.models
 {
@@ -14,5 +15,9 @@ namespace bookapi.models
         public DateTime BirthDate { get; set; }
         public ICollection<Book> Books { get; set; }
 
+        internal AuthorModels ToApiModel()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bookapi.service;
 using bookapi.models;
+using bookapi.ApiModels;
 
 namespace bookapi.Controllers
 {
@@ -22,6 +23,9 @@ namespace bookapi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            var bookModels = _bookService
+                .GetAll()
+                .ToApiModels();
             return Ok(_bookService.GetAll());
         }
 
@@ -29,7 +33,8 @@ namespace bookapi.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            var book = _bookService.Get(id);
+            var book = _bookService.Get(id)
+                 .ToApiModel();            
             if (book == null) return NotFound();
              return Ok(book);
         }
@@ -38,10 +43,11 @@ namespace bookapi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Book newbook)
         {
+            
             Book book;
             try
             {
-                book = _bookService.Add(newbook);
+                book = _bookService.Add(newbook.ToDomainModel());
 
             }
             catch (ApplicationException ex)
@@ -60,7 +66,7 @@ namespace bookapi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]  Book Updatedbook)
         {
-            var book = _bookService.Update(Updatedbook);
+            var book = _bookService.Update(Updatedbook.ToDomainModel());
             if (book == null) return NotFound();
             return Ok(book);
         }
@@ -73,6 +79,15 @@ namespace bookapi.Controllers
             if (book != null)               
             _bookService.Delete(book);
             return NoContent();
+        }
+        [HttpGet("/api/authors/{authorId}/books")]
+        public IActionResult GetBooksForAuthor(int authorId)
+        {
+            var bookModels = _bookService
+                .GetBooksForAuthor(authorId)
+                .ToApiModels();
+
+            return Ok(bookModels);
         }
     }
 }
