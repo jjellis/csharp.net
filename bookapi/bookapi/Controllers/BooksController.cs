@@ -47,7 +47,7 @@ namespace bookapi.Controllers
             Book book;
             try
             {
-                book = _bookService.Add(newbook.ToDomainModel());
+                book = _bookService.Add(newbook);
 
             }
             catch (ApplicationException ex)
@@ -66,7 +66,7 @@ namespace bookapi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]  Book updatedbook)
         {
-            var book = _bookService.Update(updatedbook.ToDomainModel());
+            var book = _bookService.Update(updatedbook);
             if (book == null) return NotFound();
             return Ok(book);
         }

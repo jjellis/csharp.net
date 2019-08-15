@@ -19,30 +19,30 @@ namespace bookapi.service
 
         public IEnumerable<Publisher> GetAll()
         {
-            return _bookContext.publisher
+            return _bookContext.publishers
                 .Include(a => a.Books)
                 .ToList();
         }
 
         public Publisher Add(Publisher newPublisher)
         {
-            _bookContext.publisher.Add(newPublisher);
+            _bookContext.publishers.Add(newPublisher);
             _bookContext.SaveChanges();
             return newPublisher;
         }
 
         public void Delete(Publisher publisher)
         {
-            var currentpublisher = _bookContext.publisher.Find(publisher.Id);
+            var currentpublisher = _bookContext.publishers.Find(publisher.Id);
             if (currentpublisher != null)
-                _bookContext.publisher.Remove(publisher);
+                _bookContext.publishers.Remove(publisher);
             _bookContext.SaveChanges();
         }
 
         public Publisher Get(int id)
         {
             //return _bookContext.publisher.FisrtOrDefault(b => b.id==id);
-            return _bookContext.publisher
+            return _bookContext.publishers
             .Include(a => a.Books)
             .SingleOrDefault(a => a.Id == id);
         }
@@ -56,7 +56,7 @@ namespace bookapi.service
             _bookContext.Entry(currentpublisher).CurrentValues.SetValues(updatedpublisher);
             _bookContext.Update(currentpublisher);
             _bookContext.SaveChanges();
-            return currentpublisher;
+            return updatedpublisher;
         }
     }
 }
